@@ -1,2 +1,2 @@
 # MaterialDesignIcons.Swift
-To use Material Design Icons font in Swift projects.
+To use Material Design Icons (https://materialdesignicons.com/) font in Swift projects. 
