@@ -8,12 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		2A11056E1D812B050010D3DB /* MaterialDesignIconsSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A11056D1D812B050010D3DB /* MaterialDesignIconsSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1105761D812B940010D3DB /* FontLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1105751D812B940010D3DB /* FontLoader.swift */; };
+		2A11057A1D812C8D0010D3DB /* MaterialDesignIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1105791D812C8D0010D3DB /* MaterialDesignIcons.swift */; };
+		2A11057C1D812D9F0010D3DB /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A11057B1D812D9F0010D3DB /* Enum.swift */; };
+		2A11057E1D812E1D0010D3DB /* materialdesignicons-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A11057D1D812E1D0010D3DB /* materialdesignicons-webfont.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2A11056A1D812B050010D3DB /* MaterialDesignIconsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MaterialDesignIconsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A11056D1D812B050010D3DB /* MaterialDesignIconsSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialDesignIconsSwift.h; sourceTree = "<group>"; };
 		2A11056F1D812B050010D3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A1105751D812B940010D3DB /* FontLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontLoader.swift; sourceTree = "<group>"; };
+		2A1105791D812C8D0010D3DB /* MaterialDesignIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialDesignIcons.swift; sourceTree = "<group>"; };
+		2A11057B1D812D9F0010D3DB /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		2A11057D1D812E1D0010D3DB /* materialdesignicons-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "materialdesignicons-webfont.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +55,10 @@
 			isa = PBXGroup;
 			children = (
 				2A11056D1D812B050010D3DB /* MaterialDesignIconsSwift.h */,
+				2A1105751D812B940010D3DB /* FontLoader.swift */,
+				2A1105791D812C8D0010D3DB /* MaterialDesignIcons.swift */,
+				2A11057D1D812E1D0010D3DB /* materialdesignicons-webfont.ttf */,
+				2A11057B1D812D9F0010D3DB /* Enum.swift */,
 				2A11056F1D812B050010D3DB /* Info.plist */,
 			);
 			path = MaterialDesignIconsSwift;
@@ -120,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A11057E1D812E1D0010D3DB /* materialdesignicons-webfont.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A1105761D812B940010D3DB /* FontLoader.swift in Sources */,
+				2A11057A1D812C8D0010D3DB /* MaterialDesignIcons.swift in Sources */,
+				2A11057C1D812D9F0010D3DB /* Enum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +173,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -206,7 +221,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -230,6 +244,7 @@
 		2A1105731D812B050010D3DB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -237,15 +252,17 @@
 				INFOPLIST_FILE = MaterialDesignIconsSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.MaterialDesignIconsSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.stridesolutions.MaterialDesignIconsSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		2A1105741D812B050010D3DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -253,7 +270,7 @@
 				INFOPLIST_FILE = MaterialDesignIconsSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.MaterialDesignIconsSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.stridesolutions.MaterialDesignIconsSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -278,6 +295,7 @@
 				2A1105741D812B050010D3DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
