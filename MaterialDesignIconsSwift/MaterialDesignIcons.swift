@@ -113,3 +113,45 @@ extension MaterialDesignIcons: FontIconProcotol {
 	public static var fontFileExtension: String { return "ttf" }
 	public static var fontName: String { return "Material-Design-Icons" }
 }
+
+extension UIImageView {
+	
+	/// Initializes and returns a newly allocated view object with the specified frame rectangle and font icon value.
+	/// - parameter frame: The frame rectangle for the view, measured in points.
+	/// - parameter fontIcon: The font icon value.
+	public convenience init(frame: CGRect, fontIcon: FontIconProcotol) {
+		self.init(frame: frame)
+		setImage(fontIcon)
+	}
+	
+	/// Set the image by specified font icon, with the image view's tintColor, frame's size and backgroundColor.
+	/// - parameter fontIcon: The font icon value.
+	public func setImage(fontIcon: FontIconProcotol) {
+		image = fontIcon.image(
+			tintColor ?? .blackColor(),
+			size: frame.size,
+			backgroundColor: backgroundColor ?? .clearColor())
+	}
+	
+}
+
+extension UILabel {
+	
+	/// Initializes and returns a newly allocated view object with the specified frame rectangle and font icon value.
+	/// - parameter frame: The frame rectangle for the view, measured in points.
+	/// - parameter fontIcon: The font icon value.
+	public convenience init(frame: CGRect, fontIcon: FontIconProcotol) {
+		self.init(frame: frame)
+		setAttributedText(fontIcon)
+	}
+	
+	/// Set the attributed text by specified font icon, with the label's tintColor, frame's size and backgroundColor.
+	/// - parameter fontIcon: The font icon value.
+	public func setAttributedText(fontIcon: FontIconProcotol) {
+		attributedText = fontIcon.attributedString(
+			tintColor ?? .blackColor(),
+			fontSize: font.pointSize,
+			backgroundColor: backgroundColor ?? .clearColor())
+	}
+	
+}
