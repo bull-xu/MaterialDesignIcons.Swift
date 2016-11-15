@@ -11,27 +11,27 @@ import Foundation
 /// FontLoad class to load the font file. Code copied from https://github.com/thii/FontAwesome.swift. Thanks to Thi, the author of FontAwesome.swift.
 class FontLoader {
 	
-	class func loadFont(name: String, withExtension ext: String = "ttf") {
-		let bundle = NSBundle(forClass: FontLoader.self)
+	class func loadFont(_ name: String, withExtension ext: String = "ttf") {
+		let bundle = Bundle(for: FontLoader.self)
 		let identifier = bundle.bundleIdentifier
 
-		let fontURL:NSURL
+		let fontURL:URL
 		if identifier?.hasPrefix("org.cocoapods") == true {
 			// If this framework is added using CocoaPods, resources is placed under a subdirectory
-			fontURL = bundle.URLForResource(name, withExtension: ext, subdirectory: "MaterialDesignIconsSwift.bundle")!
+			fontURL = bundle.url(forResource: name, withExtension: ext, subdirectory: "MaterialDesignIconsSwift.bundle")!
 		} else {
-			fontURL = bundle.URLForResource(name, withExtension: ext)!
+			fontURL = bundle.url(forResource: name, withExtension: ext)!
 		}
 		
-		let data = NSData(contentsOfURL: fontURL)!
-		let provider = CGDataProviderCreateWithCFData(data)
-		let font = CGFontCreateWithDataProvider(provider)!
+		let data = try! Data(contentsOf: fontURL)
+		let provider = CGDataProvider(data: data as CFData)
+		let font = CGFont(provider!)
 		
 		var error: Unmanaged<CFError>?
 		if !CTFontManagerRegisterGraphicsFont(font, &error) {
-			let errorDescription: CFStringRef = CFErrorCopyDescription(error!.takeUnretainedValue())
+			let errorDescription: CFString = CFErrorCopyDescription(error!.takeUnretainedValue())
 			let nsError = error!.takeUnretainedValue() as AnyObject as! NSError
-			NSException(name: NSInternalInconsistencyException, reason: errorDescription as String, userInfo: [NSUnderlyingErrorKey: nsError]).raise()
+			NSException(name: NSExceptionName.internalInconsistencyException, reason: errorDescription as String, userInfo: [NSUnderlyingErrorKey: nsError]).raise()
 		}
 	}
 	

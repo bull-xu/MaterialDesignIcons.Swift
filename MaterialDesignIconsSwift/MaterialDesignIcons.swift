@@ -15,8 +15,8 @@ public extension UIFont {
 	///
 	/// - parameter fontSize: The preferred font size.
 	/// - returns: A UIFont object of MaterialDesignIcons.
-	public class func fontMaterialDesignIconsOfSize(fontSize: CGFloat) -> UIFont {
-		return MaterialDesignIcons.fontOfSize(fontSize)
+	public class func fontMaterialDesignIcons(ofSize fontSize: CGFloat) -> UIFont? {
+		return MaterialDesignIcons.font(ofSize: fontSize)
 	}
 	
 }
@@ -30,8 +30,6 @@ public protocol FontIconProcotol {
 	static var fontFileExtension: String { get }
 	/// Font name. Use Font Book app to install the font, select "Show Font Info" from "View" menu, the value of "PostScript name" is the font name to be used in Xcode.
 	static var fontName: String { get }
-	/// A dispatch_once_t value to use for load the font file once.
-	static var onceToken: dispatch_once_t { get set }
 	/// RawValue of the Enum type.
 	var rawValue: String { get }
 }
@@ -41,18 +39,16 @@ extension FontIconProcotol {
 	/// Get a UIFont object by the provided font information of this protocol.
 	/// - parameter fontSize: The preferred font size.
 	/// - returns: A UIFont object.
-	public static func fontOfSize(fontSize: CGFloat) -> UIFont! {
-		if UIFont.fontNamesForFamilyName(fontName).isEmpty {
-			dispatch_once(&onceToken) {
-				FontLoader.loadFont(fontFilename, withExtension: fontFileExtension)
-			}
+	public static func font(ofSize fontSize: CGFloat) -> UIFont? {
+		if UIFont.fontNames(forFamilyName: fontName).isEmpty {
+			FontLoader.loadFont(fontFilename, withExtension: fontFileExtension)
 		}
 		return UIFont(name: fontName, size: fontSize)
 	}
 	
 	/// Return the string value of the font Enum value's rawValue.
 	public var stringValue: String {
-		return rawValue.substringToIndex(rawValue.startIndex.advancedBy(1))
+		return rawValue.substring(to: rawValue.characters.index(rawValue.startIndex, offsetBy: 1))
 	}
 	
 	/// Convert the font icon to an attributed string.
@@ -61,18 +57,21 @@ extension FontIconProcotol {
 	/// - parameter backgroundColor: The preferred background color, default is .clearColor()
 	/// - parameter alignment: The preferred alignment, default is .Center
 	public func attributedString(
-		textColor: UIColor = UIColor.whiteColor(),
+		_ textColor: UIColor = UIColor.white,
 		fontSize: CGFloat = 24,
-		backgroundColor: UIColor = UIColor.clearColor(),
-		alignment: NSTextAlignment = .Center) -> NSAttributedString {
+		backgroundColor: UIColor = UIColor.clear,
+		alignment: NSTextAlignment = .center) -> NSAttributedString {
 		
-		let font = Self.fontOfSize(fontSize)
+		let font = Self.font(ofSize: fontSize)
+		guard font != nil else {
+			return NSAttributedString()
+		}
 		
 		let paragraph = NSMutableParagraphStyle()
 		paragraph.alignment = alignment
 		
 		let attrs = [
-			NSFontAttributeName: font,
+			NSFontAttributeName: font!,
 			NSForegroundColorAttributeName: textColor,
 			NSBackgroundColorAttributeName: backgroundColor,
 			NSParagraphStyleAttributeName: paragraph]
@@ -88,16 +87,16 @@ extension FontIconProcotol {
 	/// - parameter backgroundColor: The preferred background color, default is .clearColor()
 	/// - parameter alignment: The preferred alignment, default is .Center
 	public func image(
-		textColor: UIColor = UIColor.whiteColor(),
-		size: CGSize = CGSizeMake(24, 24),
-		backgroundColor: UIColor = UIColor.clearColor(),
+		_ textColor: UIColor = UIColor.white,
+		size: CGSize = CGSize(width: 24, height: 24),
+		backgroundColor: UIColor = UIColor.clear,
 		fontAspectRatio: CGFloat = 1) -> UIImage {
 		
 		let fontSize = max(1, min(size.width / fontAspectRatio, size.height))
 		let attributedString = self.attributedString(textColor, fontSize: fontSize, backgroundColor: backgroundColor)
 		
 		UIGraphicsBeginImageContextWithOptions(size, false , 0.0)
-		attributedString.drawInRect(CGRectMake(0, (size.height - fontSize) / 2, size.width, fontSize))
+		attributedString.draw(in: CGRect(x: 0, y: (size.height - fontSize) / 2, width: size.width, height: fontSize))
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		
@@ -108,7 +107,7 @@ extension FontIconProcotol {
 }
 
 extension MaterialDesignIcons: FontIconProcotol {
-	public static var onceToken: dispatch_once_t = 0
+	public static var onceToken: Int = 0
 	public static var fontFilename: String { return "materialdesignicons-webfont" }
 	public static var fontFileExtension: String { return "ttf" }
 	public static var fontName: String { return "Material-Design-Icons" }
@@ -126,11 +125,11 @@ extension UIImageView {
 	
 	/// Set the image by specified font icon, with the image view's tintColor, frame's size and backgroundColor.
 	/// - parameter fontIcon: The font icon value.
-	public func setImage(fontIcon: FontIconProcotol) {
+	public func setImage(_ fontIcon: FontIconProcotol) {
 		image = fontIcon.image(
-			tintColor ?? .blackColor(),
+			tintColor ?? .black,
 			size: frame.size,
-			backgroundColor: backgroundColor ?? .clearColor())
+			backgroundColor: backgroundColor ?? .clear)
 	}
 	
 }
@@ -147,11 +146,11 @@ extension UILabel {
 	
 	/// Set the attributed text by specified font icon, with the label's tintColor, frame's size and backgroundColor.
 	/// - parameter fontIcon: The font icon value.
-	public func setAttributedText(fontIcon: FontIconProcotol) {
+	public func setAttributedText(_ fontIcon: FontIconProcotol) {
 		attributedText = fontIcon.attributedString(
-			tintColor ?? .blackColor(),
+			tintColor ?? .black,
 			fontSize: font.pointSize,
-			backgroundColor: backgroundColor ?? .clearColor())
+			backgroundColor: backgroundColor ?? .clear)
 	}
 	
 }
