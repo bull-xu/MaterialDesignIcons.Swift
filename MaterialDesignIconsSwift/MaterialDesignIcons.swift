@@ -31,6 +31,7 @@ public protocol FontIconProcotol {
 	/// Font name. Use Font Book app to install the font, select "Show Font Info" 
 	/// from "View" menu, the value of "PostScript name" is the font name to be used in Xcode.
 	static var fontName: String { get }
+	static var familyName: String { get }
 	/// RawValue of the Enum type.
 	var rawValue: String { get }
 }
@@ -41,7 +42,7 @@ extension FontIconProcotol {
 	/// - parameter fontSize: The preferred font size.
 	/// - returns: A UIFont object.
 	public static func font(ofSize fontSize: CGFloat) -> UIFont? {
-		if UIFont.fontNames(forFamilyName: fontName).isEmpty {
+		if UIFont.fontNames(forFamilyName: familyName).isEmpty {
 			FontLoader.loadFont(fontFilename, withExtension: fontFileExtension)
 		}
 		return UIFont(name: fontName, size: fontSize)
@@ -115,6 +116,7 @@ extension MaterialDesignIcons: FontIconProcotol {
 	public static var fontFilename: String { return "materialdesignicons-webfont" }
 	public static var fontFileExtension: String { return "ttf" }
 	public static var fontName: String { return "Material-Design-Icons" }
+	public static var familyName: String { return "Material Design Icons" }
 }
 
 extension UIImageView {
