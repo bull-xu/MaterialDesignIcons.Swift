@@ -28,7 +28,8 @@ public protocol FontIconProcotol {
 	static var fontFilename: String { get }
 	/// Font file extension name, e.g. ttf.
 	static var fontFileExtension: String { get }
-	/// Font name. Use Font Book app to install the font, select "Show Font Info" from "View" menu, the value of "PostScript name" is the font name to be used in Xcode.
+	/// Font name. Use Font Book app to install the font, select "Show Font Info" 
+	/// from "View" menu, the value of "PostScript name" is the font name to be used in Xcode.
 	static var fontName: String { get }
 	/// RawValue of the Enum type.
 	var rawValue: String { get }
@@ -83,7 +84,8 @@ extension FontIconProcotol {
 	
 	/// Convert the font icon to an image.
 	/// - parameter textColor: The preferred foreground color, default is .whiteColor()
-	/// - parameter size: The preferred image size, default is (24, 24). If the width and height is not equal, use the min value.
+	/// - parameter size: The preferred image size, default is (24, 24). 
+	///                   If the width and height is not equal, use the min value.
 	/// - parameter backgroundColor: The preferred background color, default is .clearColor()
 	/// - parameter alignment: The preferred alignment, default is .Center
 	public func image(
@@ -93,10 +95,12 @@ extension FontIconProcotol {
 		fontAspectRatio: CGFloat = 1) -> UIImage {
 		
 		let fontSize = max(1, min(size.width / fontAspectRatio, size.height))
-		let attributedString = self.attributedString(textColor, fontSize: fontSize, backgroundColor: backgroundColor)
+		let attributedString = self.attributedString(
+			textColor, fontSize: fontSize, backgroundColor: backgroundColor)
 		
 		UIGraphicsBeginImageContextWithOptions(size, false , 0.0)
-		attributedString.draw(in: CGRect(x: 0, y: (size.height - fontSize) / 2, width: size.width, height: fontSize))
+		let rect = CGRect(x: 0, y: (size.height - fontSize) / 2, width: size.width, height: fontSize)
+		attributedString.draw(in: rect)
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		
@@ -115,7 +119,8 @@ extension MaterialDesignIcons: FontIconProcotol {
 
 extension UIImageView {
 	
-	/// Initializes and returns a newly allocated view object with the specified frame rectangle and font icon value.
+	/// Initializes and returns a newly allocated view object with the specified 
+	/// frame rectangle and font icon value.
 	/// - parameter frame: The frame rectangle for the view, measured in points.
 	/// - parameter fontIcon: The font icon value.
 	public convenience init(frame: CGRect, fontIcon: FontIconProcotol) {
@@ -123,7 +128,8 @@ extension UIImageView {
 		setImage(fontIcon)
 	}
 	
-	/// Set the image by specified font icon, with the image view's tintColor, frame's size and backgroundColor.
+	/// Set the image by specified font icon, with the image view's tintColor, 
+	/// frame's size and backgroundColor.
 	/// - parameter fontIcon: The font icon value.
 	public func setImage(_ fontIcon: FontIconProcotol) {
 		image = fontIcon.image(
@@ -136,7 +142,8 @@ extension UIImageView {
 
 extension UILabel {
 	
-	/// Initializes and returns a newly allocated view object with the specified frame rectangle and font icon value.
+	/// Initializes and returns a newly allocated view object with the specified 
+	/// frame rectangle and font icon value.
 	/// - parameter frame: The frame rectangle for the view, measured in points.
 	/// - parameter fontIcon: The font icon value.
 	public convenience init(frame: CGRect, fontIcon: FontIconProcotol) {
@@ -144,7 +151,8 @@ extension UILabel {
 		setAttributedText(fontIcon)
 	}
 	
-	/// Set the attributed text by specified font icon, with the label's tintColor, frame's size and backgroundColor.
+	/// Set the attributed text by specified font icon, with the label's tintColor, 
+	/// frame's size and backgroundColor.
 	/// - parameter fontIcon: The font icon value.
 	public func setAttributedText(_ fontIcon: FontIconProcotol) {
 		attributedText = fontIcon.attributedString(
