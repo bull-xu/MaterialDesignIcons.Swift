@@ -119,6 +119,39 @@ extension MaterialDesignIcons: FontIconProcotol {
 	public static var familyName: String { return "Material Design Icons" }
 }
 
+extension UIImage {
+	
+	public convenience init?(
+		icon: FontIconProcotol,
+		color: UIColor = UIColor.white,
+		size: CGSize = CGSize(width: 24, height: 24),
+		backgroundColor: UIColor = UIColor.clear,
+		fontAspectRatio: CGFloat = 1) {
+		let img = icon.image(color, size: size,
+		                     backgroundColor: backgroundColor, fontAspectRatio: fontAspectRatio)
+		guard let cgImage = img.cgImage else { return nil }
+		self.init(cgImage: cgImage, scale: img.scale, orientation: img.imageOrientation)
+	}
+	
+}
+
+extension NSAttributedString {
+	
+	public convenience init(
+		icon: FontIconProcotol,
+		textColor: UIColor = UIColor.white,
+		fontSize: CGFloat = 24,
+		backgroundColor: UIColor = UIColor.clear,
+		alignment: NSTextAlignment = .center) {
+
+		let attr = icon.attributedString(
+			textColor, fontSize: fontSize, backgroundColor: backgroundColor, alignment: alignment)
+		self.init(attributedString: attr)
+
+	}
+	
+}
+
 extension UIImageView {
 	
 	/// Initializes and returns a newly allocated view object with the specified 
