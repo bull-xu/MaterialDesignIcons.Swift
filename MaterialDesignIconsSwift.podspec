@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/bull-xu-stride/MaterialDesignIcons.Swift"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { "Bull Xu" => "bullx@stridesolutions.com.au" }
-  s.source           = { :git => "https://github.com/bull-xu-stride/MaterialDesignIcons.Swift.git", :tag => "v#{s.version}" }
+  s.source           = { :git => "https://github.com/bull-xu-stride/MaterialDesignIcons.Swift.git", :tag => s.version }
 
   s.ios.deployment_target = '8.0'
   s.requires_arc = true
