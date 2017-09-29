@@ -50,7 +50,8 @@ extension FontIconProcotol {
 	
 	/// Return the string value of the font Enum value's rawValue.
 	public var stringValue: String {
-		return rawValue.substring(to: rawValue.characters.index(rawValue.startIndex, offsetBy: 1))
+		let index = rawValue.index(rawValue.startIndex, offsetBy: 1)
+		return String(rawValue[..<index])
 	}
 	
 	/// Convert the font icon to an attributed string.
@@ -73,10 +74,10 @@ extension FontIconProcotol {
 		paragraph.alignment = alignment
 		
 		let attrs = [
-			NSFontAttributeName: font!,
-			NSForegroundColorAttributeName: textColor,
-			NSBackgroundColorAttributeName: backgroundColor,
-			NSParagraphStyleAttributeName: paragraph]
+			NSAttributedStringKey.font: font!,
+			NSAttributedStringKey.foregroundColor: textColor,
+			NSAttributedStringKey.backgroundColor: backgroundColor,
+			NSAttributedStringKey.paragraphStyle: paragraph]
 		
 		let attributedString = NSAttributedString(string: stringValue, attributes: attrs)
 		return attributedString

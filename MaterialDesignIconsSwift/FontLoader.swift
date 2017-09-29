@@ -31,9 +31,9 @@ internal class FontLoader {
 		
 		guard let url = fontURL,
 			let data = try? Data(contentsOf: url),
-			let provider = CGDataProvider(data: data as CFData) else { return }
+			let provider = CGDataProvider(data: data as CFData),
+			let font = CGFont(provider) else { return }
 		
-		let font = CGFont(provider)
 		var error: Unmanaged<CFError>?
 		if CTFontManagerRegisterGraphicsFont(font, &error) { return }
 		
