@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = "MaterialDesignIconsSwift"
-  s.version          = "3.0.1"
+  s.version          = "4.2.046"
   s.summary          = "Use Material Design Icons font in Swift projects."
   s.homepage         = "https://github.com/bull-xu-stride/MaterialDesignIcons.Swift"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
