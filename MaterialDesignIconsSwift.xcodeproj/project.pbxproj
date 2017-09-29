@@ -15,8 +15,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0539C2828D0002CD067BE007 /* Pods_MaterialDesignIconsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MaterialDesignIconsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		16A695E0500F90530CF075CB /* Pods-MaterialDesignIconsSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaterialDesignIconsSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MaterialDesignIconsSwift/Pods-MaterialDesignIconsSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		2A11056A1D812B050010D3DB /* MaterialDesignIconsSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MaterialDesignIconsSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A11056D1D812B050010D3DB /* MaterialDesignIconsSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialDesignIconsSwift.h; sourceTree = "<group>"; };
 		2A11056F1D812B050010D3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -24,7 +22,6 @@
 		2A1105791D812C8D0010D3DB /* MaterialDesignIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialDesignIcons.swift; sourceTree = "<group>"; };
 		2A11057B1D812D9F0010D3DB /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		2A11057D1D812E1D0010D3DB /* materialdesignicons-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "materialdesignicons-webfont.ttf"; sourceTree = "<group>"; };
-		2D968DD055191EA6FEB4AC58 /* Pods-MaterialDesignIconsSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaterialDesignIconsSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-MaterialDesignIconsSwift/Pods-MaterialDesignIconsSwift.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +38,6 @@
 		0EBE501BC05D1DD24AFB719B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0539C2828D0002CD067BE007 /* Pods_MaterialDesignIconsSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -51,7 +47,6 @@
 			children = (
 				2A11056C1D812B050010D3DB /* MaterialDesignIconsSwift */,
 				2A11056B1D812B050010D3DB /* Products */,
-				834E3451381343DD56DD0DB2 /* Pods */,
 				0EBE501BC05D1DD24AFB719B /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -75,15 +70,6 @@
 				2A11056F1D812B050010D3DB /* Info.plist */,
 			);
 			path = MaterialDesignIconsSwift;
-			sourceTree = "<group>";
-		};
-		834E3451381343DD56DD0DB2 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				16A695E0500F90530CF075CB /* Pods-MaterialDesignIconsSwift.debug.xcconfig */,
-				2D968DD055191EA6FEB4AC58 /* Pods-MaterialDesignIconsSwift.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,7 +269,6 @@
 		};
 		2A1105731D812B050010D3DB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 16A695E0500F90530CF075CB /* Pods-MaterialDesignIconsSwift.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -301,7 +286,6 @@
 		};
 		2A1105741D812B050010D3DB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D968DD055191EA6FEB4AC58 /* Pods-MaterialDesignIconsSwift.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
