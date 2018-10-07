@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreText
 
 /// FontLoad class to load the font file. 
 /// Code copied from https://github.com/thii/FontAwesome.swift. 
@@ -22,11 +23,10 @@ internal class FontLoader {
 		let fontURL: URL?
 		if identifier?.hasPrefix("org.cocoapods") == true {
 			// If this framework is added using CocoaPods, resources is placed under a subdirectory
-			fontURL = bundle.url(forResource: name,
-			                     withExtension: ext, subdirectory: "MaterialDesignIconsSwift.bundle")
+			fontURL = bundle.url(
+				forResource: name, withExtension: ext, subdirectory: "MaterialDesignIconsSwift.bundle")
 		} else {
-			fontURL = bundle.url(forResource: name,
-			                     withExtension: ext)
+			fontURL = bundle.url(forResource: name, withExtension: ext)
 		}
 		
 		guard let url = fontURL,

@@ -7,40 +7,51 @@
 //
 
 import Foundation
+import UIKit
 
-/// A MaterialDesignIcons extension to UIFont.
+/**
+A MaterialDesignIcons extension to UIFont.
+*/
 public extension UIFont {
 	
-	/// Get a UIFont object of MaterialDesignIcons.
-	///
-	/// - parameter fontSize: The preferred font size.
-	/// - returns: A UIFont object of MaterialDesignIcons.
+	/**
+	 Gets a UIFont object of MaterialDesignIcons.
+	
+	 - parameter fontSize: The preferred font size.
+	 - returns: A UIFont object of MaterialDesignIcons.
+	*/
 	public class func fontMaterialDesignIcons(ofSize fontSize: CGFloat) -> UIFont? {
 		return MaterialDesignIcons.font(ofSize: fontSize)
 	}
 	
 }
 
-/// A protocol to provide font's file name, extension and font name.
-/// This protocol can be used to any icon fonts, such as FontAwsome etc.
+/**
+ A protocol to provide font's file name, extension and font name.
+ This protocol can be used to any icon fonts, such as FontAwsome etc.
+*/
 public protocol FontIconProcotol {
-	/// Font file name in the bundle.
+	/** Font file name in the bundle. */
 	static var fontFilename: String { get }
-	/// Font file extension name, e.g. ttf.
+	/** Font file extension name, e.g. ttf. */
 	static var fontFileExtension: String { get }
-	/// Font name. Use Font Book app to install the font, select "Show Font Info" 
-	/// from "View" menu, the value of "PostScript name" is the font name to be used in Xcode.
+	/**
+	Font name. Use Font Book app to install the font, select "Show Font Info"
+	 from "View" menu, the value of "PostScript name" is the font name to be used in Xcode.
+	*/
 	static var fontName: String { get }
 	static var familyName: String { get }
-	/// RawValue of the Enum type.
+	/** RawValue of the Enum type. */
 	var rawValue: String { get }
 }
 
 extension FontIconProcotol {
 
-	/// Get a UIFont object by the provided font information of this protocol.
-	/// - parameter fontSize: The preferred font size.
-	/// - returns: A UIFont object.
+	/**
+	 Gets a UIFont object by the provided font information of this protocol.
+	 - parameter fontSize: The preferred font size.
+	 - returns: A UIFont object.
+	*/
 	public static func font(ofSize fontSize: CGFloat) -> UIFont? {
 		if UIFont.fontNames(forFamilyName: familyName).isEmpty {
 			FontLoader.loadFont(fontFilename, withExtension: fontFileExtension)
@@ -48,57 +59,67 @@ extension FontIconProcotol {
 		return UIFont(name: fontName, size: fontSize)
 	}
 	
-	/// Return the string value of the font Enum value's rawValue.
+	/**
+	 Returns the string value of the font Enum value's rawValue.
+	*/
 	public var stringValue: String {
 		let index = rawValue.index(rawValue.startIndex, offsetBy: 1)
 		return String(rawValue[..<index])
 	}
 	
-	/// Convert the font icon to an attributed string.
-	/// - parameter textColor: The preferred foreground color, default is .whiteColor()
-	/// - parameter fontSize: The preferred font size, default is 24.
-	/// - parameter backgroundColor: The preferred background color, default is .clearColor()
-	/// - parameter alignment: The preferred alignment, default is .Center
+	/**
+	Converts the font icon to an attributed string.
+	- parameter textColor: The preferred foreground color, default is `UIColor.white`
+	- parameter fontSize: The preferred font size, default is 24.
+	- parameter backgroundColor: The preferred background color, default is `UIColor.clear`
+	- parameter alignment: The preferred alignment, default is `NSTextAlignment.center`
+	*/
 	public func attributedString(
-		_ textColor: UIColor = UIColor.white,
+		_ textColor: UIColor = .white,
 		fontSize: CGFloat = 24,
-		backgroundColor: UIColor = UIColor.clear,
+		backgroundColor: UIColor = .clear,
 		alignment: NSTextAlignment = .center) -> NSAttributedString {
 		
-		let font = Self.font(ofSize: fontSize)
-		guard font != nil else {
+		guard let font = Self.font(ofSize: fontSize) else {
 			return NSAttributedString()
 		}
 		
 		let paragraph = NSMutableParagraphStyle()
 		paragraph.alignment = alignment
 		
-		let attrs = [
-			NSAttributedStringKey.font: font!,
-			NSAttributedStringKey.foregroundColor: textColor,
-			NSAttributedStringKey.backgroundColor: backgroundColor,
-			NSAttributedStringKey.paragraphStyle: paragraph]
+		let attrs: [NSAttributedString.Key: Any] = [
+			.font: font,
+			.foregroundColor: textColor,
+			.backgroundColor: backgroundColor,
+			.paragraphStyle: paragraph
+		]
 		
 		let attributedString = NSAttributedString(string: stringValue, attributes: attrs)
 		return attributedString
 		
 	}
 	
-	/// Convert the font icon to an image.
-	/// - parameter textColor: The preferred foreground color, default is .whiteColor()
-	/// - parameter size: The preferred image size, default is (24, 24). 
-	///                   If the width and height is not equal, use the min value.
-	/// - parameter backgroundColor: The preferred background color, default is .clearColor()
-	/// - parameter alignment: The preferred alignment, default is .Center
+	/**
+	 Converts the font icon to an image.
+	 - parameter textColor: The preferred foreground color, default is `UIColor.white`
+	 - parameter size: The preferred image size, default is (24, 24).
+	                   If the width and height is not equal, use the min value.
+	 - parameter backgroundColor: The preferred background color, default is `UIColor.clear`
+	 - parameter fontAspectRatio: The font aspect ratio, defaut is 1 (without scaling).
+	*/
 	public func image(
-		_ textColor: UIColor = UIColor.white,
+		_ textColor: UIColor = .white,
 		size: CGSize = CGSize(width: 24, height: 24),
-		backgroundColor: UIColor = UIColor.clear,
+		backgroundColor: UIColor = .clear,
 		fontAspectRatio: CGFloat = 1) -> UIImage {
+		
+		assert(fontAspectRatio > 0.0)
 		
 		let fontSize = max(1, min(size.width / fontAspectRatio, size.height))
 		let attributedString = self.attributedString(
-			textColor, fontSize: fontSize, backgroundColor: backgroundColor)
+			textColor,
+			fontSize: fontSize,
+			backgroundColor: backgroundColor)
 		
 		UIGraphicsBeginImageContextWithOptions(size, false , 0.0)
 		let rect = CGRect(x: 0, y: (size.height - fontSize) / 2, width: size.width, height: fontSize)
@@ -112,32 +133,74 @@ extension FontIconProcotol {
 	
 }
 
+/**
+
+Implements the FontIconProcotol to the icon enums.
+
+*/
 extension MaterialDesignIcons: FontIconProcotol {
-	public static var onceToken: Int = 0
-	public static var fontFilename: String { return "materialdesignicons-webfont" }
-	public static var fontFileExtension: String { return "ttf" }
-	public static var fontName: String { return "Material-Design-Icons" }
-	public static var familyName: String { return "Material Design Icons" }
+
+	public static var fontFilename: String {
+		return "materialdesignicons-webfont"
+	}
+
+	public static var fontFileExtension: String {
+		return "ttf"
+	}
+
+	public static var fontName: String {
+		return "Material-Design-Icons"
+	}
+
+	public static var familyName: String {
+		return "Material Design Icons"
+	}
+
 }
 
 extension UIImage {
 	
+	/**
+	Initializes and returns an image object with the specified icon and properties.
+	- parameter textColor: The preferred foreground color, default is `UIColor.white`
+	- parameter size: The preferred image size, default is (24, 24).
+	If the width and height is not equal, use the min value.
+	- parameter backgroundColor: The preferred background color, default is `UIColor.clear`
+	- parameter fontAspectRatio: The font aspect ratio, defaut is 1 (without scaling).
+	*/
 	public convenience init?(
 		icon: FontIconProcotol,
-		color: UIColor = UIColor.white,
+		color: UIColor = .white,
 		size: CGSize = CGSize(width: 24, height: 24),
-		backgroundColor: UIColor = UIColor.clear,
+		backgroundColor: UIColor = .clear,
 		fontAspectRatio: CGFloat = 1) {
-		let img = icon.image(color, size: size,
-		                     backgroundColor: backgroundColor, fontAspectRatio: fontAspectRatio)
-		guard let cgImage = img.cgImage else { return nil }
+		
+		let img = icon.image(
+			color,
+			size: size,
+			backgroundColor: backgroundColor,
+			fontAspectRatio: fontAspectRatio)
+		
+		guard let cgImage = img.cgImage else {
+			return nil
+		}
+		
 		self.init(cgImage: cgImage, scale: img.scale, orientation: img.imageOrientation)
+		
 	}
 	
 }
 
 extension NSAttributedString {
 	
+	/**
+	Returns an `NSAttributedString` object initialized with the specified icon and properties.
+	- parameter textColor: The preferred foreground color, default is `UIColor.white`
+	- parameter size: The preferred image size, default is (24, 24).
+	If the width and height is not equal, use the min value.
+	- parameter backgroundColor: The preferred background color, default is `UIColor.clear`
+	- parameter fontAspectRatio: The font aspect ratio, defaut is 1 (without scaling).
+	*/
 	public convenience init(
 		icon: FontIconProcotol,
 		textColor: UIColor = UIColor.white,
@@ -146,7 +209,11 @@ extension NSAttributedString {
 		alignment: NSTextAlignment = .center) {
 
 		let attr = icon.attributedString(
-			textColor, fontSize: fontSize, backgroundColor: backgroundColor, alignment: alignment)
+			textColor,
+			fontSize: fontSize,
+			backgroundColor: backgroundColor,
+			alignment: alignment)
+		
 		self.init(attributedString: attr)
 
 	}
@@ -155,18 +222,22 @@ extension NSAttributedString {
 
 extension UIImageView {
 	
-	/// Initializes and returns a newly allocated view object with the specified 
-	/// frame rectangle and font icon value.
-	/// - parameter frame: The frame rectangle for the view, measured in points.
-	/// - parameter fontIcon: The font icon value.
+	/**
+	 Initializes and returns a newly allocated view object with the specified
+	 frame rectangle and font icon value.
+	 - parameter frame: The frame rectangle for the view, measured in points.
+	 - parameter fontIcon: The font icon value.
+	*/
 	public convenience init(frame: CGRect, fontIcon: FontIconProcotol) {
 		self.init(frame: frame)
 		setImage(fontIcon)
 	}
 	
-	/// Set the image by specified font icon, with the image view's tintColor, 
-	/// frame's size and backgroundColor.
-	/// - parameter fontIcon: The font icon value.
+	/**
+	 Set the image by specified font icon, with the image view's tintColor,
+	 frame's size and backgroundColor.
+	 - parameter fontIcon: The font icon value.
+	*/
 	public func setImage(_ fontIcon: FontIconProcotol) {
 		image = fontIcon.image(
 			tintColor ?? .black,
@@ -178,18 +249,22 @@ extension UIImageView {
 
 extension UILabel {
 	
-	/// Initializes and returns a newly allocated view object with the specified 
-	/// frame rectangle and font icon value.
-	/// - parameter frame: The frame rectangle for the view, measured in points.
-	/// - parameter fontIcon: The font icon value.
+	/**
+	 Initializes and returns a newly allocated view object with the specified
+	 frame rectangle and font icon value.
+	 - parameter frame: The frame rectangle for the view, measured in points.
+	 - parameter fontIcon: The font icon value.
+	*/
 	public convenience init(frame: CGRect, fontIcon: FontIconProcotol) {
 		self.init(frame: frame)
 		setAttributedText(fontIcon)
 	}
 	
-	/// Set the attributed text by specified font icon, with the label's tintColor, 
-	/// frame's size and backgroundColor.
-	/// - parameter fontIcon: The font icon value.
+	/**
+	 Sets the attributed text by specified font icon, with the label's tintColor,
+	 frame's size and backgroundColor.
+	 - parameter fontIcon: The font icon value.
+	*/
 	public func setAttributedText(_ fontIcon: FontIconProcotol) {
 		attributedText = fontIcon.attributedString(
 			tintColor ?? .black,
